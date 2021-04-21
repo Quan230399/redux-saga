@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.text-right{
+  float: right;
+  cursor: pointer;
+}
+
+.mt-15{
+  margin-top:15px;
+}
+
+.mr-5{
+  margin-right: 5px;
+}
+
