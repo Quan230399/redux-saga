@@ -6,3 +6,4 @@ export const DELETE_TASK='DELETE_TASK';
 export const UPDATE_TASK='UPDATE_TASK';
 export const TOGGLE_STATUS_TASK= 'TOGGLE_STATUS_TASK';
 export const CLEAR_FORM= 'CLEAR_FORM';
+export const SEARCH= 'SEARCH';

@@ -4,7 +4,7 @@ import * as action from "../actions/actions";
 import PropTypes from "prop-types";
 
 function TaskForm(props) {
-  const { taskItem, onAddTask, onClose, onClearForm } = props;
+  const { taskItem, onAddTask, onClose } = props;
   const [valueForm, setValueForm] = useState({
     id: "",
     name: "",
@@ -13,11 +13,6 @@ function TaskForm(props) {
 
   const closeForm = () => {
     if (!onClose) return;
-    onClearForm({
-      id: "",
-      name: "",
-      status: true,
-    });
     onClose();
   };
 
@@ -43,6 +38,7 @@ function TaskForm(props) {
       name: "",
       status: true,
     });
+    closeForm();
   };
 
   return (
@@ -82,8 +78,8 @@ function TaskForm(props) {
             <option value={false}>Ẩn</option>
           </select>
 
-          <div className="text-center">
-            <button type="submit" className="btn btn-warning">
+          <div className="text-center mt-15">
+            <button type="submit" className="btn btn-warning ">
               {!valueForm.id ? "Thêm" : "Lưu"}
             </button>
             &nbsp;
@@ -119,9 +115,6 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddTask: (task) => {
       dispatch(action.addTask(task));
-    },
-    onClearForm: (task) => {
-      dispatch(action.clearForm(task));
     },
   };
 };
