@@ -18,7 +18,8 @@ ReactDOM.render(
     <Provider store={store}>
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={1500}
+        hideProgressBar
         newestOnTop={false}
         closeOnClick
         pauseOnFocusLoss
