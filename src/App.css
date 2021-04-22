@@ -10,3 +10,9 @@
 .mr-5 {
   margin-right: 5px;
 }
+
+svg {
+  float: right;
+  margin-top: 2px;
+  font-size: 18px;
+}
