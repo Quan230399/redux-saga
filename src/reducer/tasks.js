@@ -2,7 +2,6 @@ import * as type from "../constant/actionType";
 import findIndex from "../helpers/findIndex";
 import slugString from "slug";
 import { toastSuccess, toastWarning } from "../helpers/toastHelper";
-import { confirmA } from "../helpers/confirmAlert";
 
 const randomString = require("randomstring");
 const data = JSON.parse(localStorage.getItem("task"));

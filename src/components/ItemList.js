@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import * as action from "../actions/actions";
 import { connect } from "react-redux";
 import { confirmA } from "../helpers/confirmAlert";
-import { confirmAlert } from "react-confirm-alert"; // Import
-
 function ItemList(props) {
   const {
     task,

@@ -19,7 +19,7 @@ function Sort(props) {
       </button>
       <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li>
-          <a role="button" name="a-z" onClick={onSortKey}>
+          <a  role="button" name="a-z" onClick={onSortKey}>
             <span className="fa fa-sort-alpha-asc pr-5">Tên A-Z</span>
           </a>
         </li>

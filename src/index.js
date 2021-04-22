@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import configureStore from "./redux/configureStore";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
@@ -16,7 +16,16 @@ const store = configureStore();
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer autoClose={2000}></ToastContainer>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover  
+        transition={Zoom}
+      ></ToastContainer>
       <App />
     </Provider>
   </React.StrictMode>,
