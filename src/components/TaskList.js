@@ -4,19 +4,19 @@ import ItemList from "./ItemList";
 import { connect } from "react-redux";
 
 function TaskList(props) {
-  const { tasks, onOpen, keySearch, keySort } = props;
+  const { tasks, onOpen } = props;
 
-  const taskSort = tasks.sort((x, y) => {
-    if (keySort === "ẩn") return x.status - y.status;
-    if (keySort === "kích hoạt") return y.status - x.status;
-    if (keySort === "a-z") return x.name.localeCompare(y.name);
-    if (keySort === "z-a") return y.name.localeCompare(x.name);
-    return 0;
-  });
+  // const taskSort = tasks.sort((x, y) => {
+  //   if (keySort === "ẩn") return x.status - y.status;
+  //   if (keySort === "kích hoạt") return y.status - x.status;
+  //   if (keySort === "a-z") return x.name.localeCompare(y.name);
+  //   if (keySort === "z-a") return y.name.localeCompare(x.name);
+  //   return 0;
+  // });
 
-  const tasksSearch = taskSort.filter((task) => task.name_slug.includes(keySearch));
+  // const tasksSearch = taskSort.filter((task) => task.name_slug.includes(keySearch));
 
-  const elements = tasksSearch.map((task, index) => {
+  const elements = tasks.map((task, index) => {
     return (
       <ItemList
         task={task}

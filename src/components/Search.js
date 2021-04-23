@@ -1,14 +1,14 @@
 import React from "react";
 import debounce from "lodash.debounce";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as action from "../actions/actions";
 
 function Search(props) {
-  const { onSearch } = props;
+  const {   onSearchTask } = props;
 
   const depouceSearch = debounce(
     (value) => {
-      // console.log(value);
-      onSearch(value);
+      onSearchTask(value);
     },
     700,
     []
@@ -38,13 +38,12 @@ function Search(props) {
   );
 }
 
-Search.propTypes = {
-  onSearch: PropTypes.func,
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onSearchTask: (key) => {
+      dispatch(action.search(key));
+    },
+  };
 };
 
-Search.defaultProps = {
-  onSearch: null,
-};
-
-
-export default Search;
+export default connect(null, mapDispatchToProps)(Search);

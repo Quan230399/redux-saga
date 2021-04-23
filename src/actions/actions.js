@@ -41,3 +41,16 @@ export const toogleStatus = (id) => {
   };
 };
 
+export const search = (key) => {
+  return {
+    type: type.SEARCH,
+    payload: key,
+  };
+};
+
+export const sort = (keySort) => {
+  return {
+    type: type.SORT,
+    payload: keySort,
+  };
+};

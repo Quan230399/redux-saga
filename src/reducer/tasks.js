@@ -10,6 +10,8 @@ var initialState = data ? data : [];
 
 var myReducer = (state = initialState, action) => {
   let tasks = [...state];
+  let index
+  let newTask;
   switch (action.type) {
     // add task
     case type.ADD_TASK:
@@ -57,20 +59,18 @@ var myReducer = (state = initialState, action) => {
 
     // delete task
     case type.DELETE_TASK:
-      let check =true;
-      if (check) {
-        const index = findIndex(state, action.payload);
-        const newTask = [...state];
-        newTask.splice(index, 1);
-        tasks = [...newTask];
-        localStorage.setItem("task", JSON.stringify(newTask));
-      }
+      index = findIndex(state, action.payload);
+      newTask = [...state];
+      newTask.splice(index, 1);
+      tasks = [...newTask];
+      localStorage.setItem("task", JSON.stringify(newTask));
+
       return [...tasks];
 
     // toggle status
     case type.TOGGLE_STATUS_TASK:
-      const index = findIndex(state, action.payload);
-      const newTask = [...state];
+      index = findIndex(state, action.payload);
+      newTask = [...state];
       newTask[index] = {
         ...newTask[index],
         status: !newTask[index].status,
@@ -81,9 +81,14 @@ var myReducer = (state = initialState, action) => {
 
       return [...tasks];
 
+    case type.SEARCH:
+      newTask =JSON.parse(localStorage.getItem("task"));
+      const tasksSearch = newTask.filter((task) => task.name_slug.includes(slugString(action.payload)));
+      return tasksSearch;
+
     // default
     default:
-      return state;
+      return [...state];
   }
 };
 

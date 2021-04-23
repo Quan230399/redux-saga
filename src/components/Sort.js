@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as action from "../actions/actions";
 
 function Sort(props) {
-  const { onSort } = props;
+  const { onSortTask } = props;
   const [key, setKey] = useState("");
 
   const onSortKey = (e) => {
-    const name = e.target.name;
-    onSort(name);
-    setKey(name);
+    const key = e.target.name;
+    onSortTask(key);
+    setKey(key);
   };
 
   const icon = (
@@ -67,12 +68,13 @@ function Sort(props) {
   );
 }
 
-Sort.propTypes = {
-  onSort: PropTypes.func,
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    onSortTask: (keySort) => {
+      dispatch(action.sort(keySort));
+    },
+  };
 };
 
-Sort.defaultProps = {
-  onSort: null,
-};
-
-export default Sort;
+export default connect(null,mapDispatchToProps)(Sort);

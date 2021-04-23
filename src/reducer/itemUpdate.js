@@ -1,6 +1,6 @@
 import * as type from "../constant/actionType";
 
-var initialState = [];
+var initialState = {};
 
 var itemUpdate = (state = initialState, action) => {
   switch (action.type) {
