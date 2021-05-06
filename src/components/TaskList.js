@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ItemList from "./ItemList";
 import { connect } from "react-redux";
 
 function TaskList(props) {
-  const { tasks, onOpen } = props;
+  const { tasks } = props;
 
   // const taskSort = tasks.sort((x, y) => {
   //   if (keySort === "ẩn") return x.status - y.status;
@@ -22,7 +21,6 @@ function TaskList(props) {
         task={task}
         index={index}
         key={task.id}
-        onOpen={onOpen}
       ></ItemList>
     );
   });
@@ -42,19 +40,10 @@ function TaskList(props) {
   );
 }
 
-TaskList.propTypes = {
-  onOpen: PropTypes.func,
-  keySearch: PropTypes.string.isRequired,
-  keySort: PropTypes.string.isRequired,
-};
-
-TaskList.defaultProps = {
-  onOpen: null,
-};
 
 const mapStateToProps = (state) => {
   return {
-    tasks: state.tasks,
+    tasks: state.tasks.todo,
   };
 };
 

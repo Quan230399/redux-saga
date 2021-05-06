@@ -1,21 +1,38 @@
 import * as type from "../constant/actionType";
-import findIndex from "../helpers/findIndex";
 import slugString from "slug";
 import { toastSuccess, toastWarning } from "../helpers/toastHelper";
 
 const randomString = require("randomstring");
-const data = JSON.parse(localStorage.getItem("task"));
 
-var initialState = data ? data : [];
+var initialState = {
+  todo: [],
+  toast: {
+    status: "",
+    title: "",
+  },
+};
 
 var myReducer = (state = initialState, action) => {
-  let tasks = [...state];
-  let index
+  let tasks = { ...state };
   let newTask;
   switch (action.type) {
+    //saga
+    case type.FETCH_LIST_TASK:
+      return {
+        ...state,
+      };
+
+    case type.FETCH_LIST_TASK_SUCCESS:
+      const data = action.payload;
+      return {
+        ...state,
+        todo: data,
+      };
     // add task
     case type.ADD_TASK:
-      const tasksListSlugs = tasks.map((task) => slugString(task.name.trim()));
+      const tasksListSlugs = tasks.todo.map((task) =>
+        slugString(task.name.trim())
+      );
       let newItem = {
         id: action.payload.id,
         name: action.payload.name,
@@ -35,60 +52,84 @@ var myReducer = (state = initialState, action) => {
           ) {
             newItem.id = randomString.generate(7);
             newItem.name_slug = slugString(action.payload.name.trim());
-            tasks = [...tasks, newItem];
+            tasks = {
+              ...tasks,
+              todo: [...tasks.todo, newItem],
+              toast: { status: "succes", title: "Thêm mới thành công" },
+            };
             // alert("Thêm thành công");
             toastSuccess("Thêm mới thành công");
           } else {
             // alert("Công việc đã tồn tại");
-            toastWarning("Công việc đã tồn tại");
+            tasks = {
+              ...tasks,
+              toast: { status: "error", title: "Công việc đã tồn tại" },
+            };
+            toastWarning(tasks.toast.title);
           }
         } else {
           // alert("Bạn chưa nhập tên");
-          toastWarning("Bạn chưa nhập tên");
+          tasks = {
+            ...tasks,
+            toast: { status: "error", title: "Bạn chưa nhập tên" },
+          };
+          toastWarning(tasks.toast.title);
         }
       }
       // update task
       else {
-        const index = findIndex(tasks, action.payload.id);
         newItem.name_slug = slugString(action.payload.name.trim());
-        tasks[index] = newItem;
-        toastSuccess("Chỉnh sửa thành công");
+        newTask = tasks.todo.map((task) => {
+          return task.id === newItem.id ? newItem : task;
+        });
+        tasks = {
+          ...tasks,
+          todo: [...newTask],
+          toast: { status: "succes", title: "Chỉnh sửa thành công" },
+        };
+        toastSuccess(tasks.toast.title);
       }
-      localStorage.setItem("task", JSON.stringify(tasks));
-      return [...tasks];
+      return { ...tasks };
 
     // delete task
     case type.DELETE_TASK:
-      index = findIndex(state, action.payload);
-      newTask = [...state];
-      newTask.splice(index, 1);
-      tasks = [...newTask];
-      localStorage.setItem("task", JSON.stringify(newTask));
-
-      return [...tasks];
+      newTask = tasks.todo.filter((task) => {
+        return task.id !== action.payload;
+      });
+      tasks = { ...tasks, todo: [...newTask] };
+      return { ...tasks };
 
     // toggle status
     case type.TOGGLE_STATUS_TASK:
-      index = findIndex(state, action.payload);
-      newTask = [...state];
-      newTask[index] = {
-        ...newTask[index],
-        status: !newTask[index].status,
-      };
-      tasks = [...newTask];
+      newTask = tasks.todo.map((task) => {
+        return task.id === action.payload
+          ? { ...task, status: !task.status }
+          : task;
+      });
+      tasks = { ...tasks, todo: [...newTask] };
       toastSuccess("Đã thay đổi trạng thái");
-      localStorage.setItem("task", JSON.stringify(newTask));
 
-      return [...tasks];
+      return { ...tasks };
 
-    case type.SEARCH:
-      newTask =JSON.parse(localStorage.getItem("task"));
-      const tasksSearch = newTask.filter((task) => task.name_slug.includes(slugString(action.payload)));
-      return tasksSearch;
+    case type.CLEAR_TOAST:
+      return {
+        ...tasks,
+        toast: {
+          status: "",
+          title: "",
+        },
+      };
+
+    // case type.SEARCH:
+    //   newTask = JSON.parse(localStorage.getItem("task"));
+    //   const tasksSearch = newTask.filter((task) =>
+    //     task.name_slug.includes(slugString(action.payload))
+    //   );
+    //   return tasksSearch;
 
     // default
     default:
-      return [...state];
+      return { ...tasks };
   }
 };
 

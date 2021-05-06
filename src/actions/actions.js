@@ -1,10 +1,5 @@
 import * as type from "../constant/actionType";
 
-export const listAll = () => {
-  return {
-    type: type.LIST_ALL,
-  };
-};
 
 export const addTask = (task) => {
   return {
@@ -52,5 +47,32 @@ export const sort = (keySort) => {
   return {
     type: type.SORT,
     payload: keySort,
+  };
+};
+
+export const clearToast = () => {
+  return {
+    type: type.CLEAR_TOAST,
+  };
+};
+
+//login
+
+export const login = (data) => {
+  return {};
+};
+
+// saga
+
+export const fetchListTodo = () => {
+  return {
+    type: type.FETCH_LIST_TASK,
+  };
+};
+
+export const fetchListTodoSuccess = (data) => {
+  return {
+    type: type.FETCH_LIST_TASK_SUCCESS,
+    payload: data,
   };
 };

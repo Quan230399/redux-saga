@@ -2,19 +2,21 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as action from "../actions/actions";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function TaskForm(props) {
-  const { taskItem, onAddTask, onClose } = props;
+  const { taskItem, onAddTask, status } = props;
+  const history = useHistory();
   const [valueForm, setValueForm] = useState({
     id: "",
     name: "",
     status: true,
   });
 
-  const closeForm = () => {
-    if (!onClose) return;
-    onClose();
-  };
+  useEffect(() => {
+   if(status==="succes") history.push("/");
+  },[status]);
 
   useEffect(() => {
     setValueForm(taskItem);
@@ -38,18 +40,13 @@ function TaskForm(props) {
       name: "",
       status: true,
     });
-    closeForm();
   };
 
   return (
     <div className="panel panel-warning">
       <div className="panel-heading">
-        <h3 className="panel-title">
+        <h3 className="panel-title text-center">
           {!valueForm.id ? "Thêm công viêc" : "Chỉnh sửa công việc"}
-          <span
-            className="fa fa-times-circle text-right"
-            onClick={closeForm}
-          ></span>
         </h3>
       </div>
       <div className="panel-body">
@@ -83,13 +80,14 @@ function TaskForm(props) {
               {!valueForm.id ? "Thêm" : "Lưu"}
             </button>
             &nbsp;
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={closeForm}
-            >
-              Hủy Bỏ
-            </button>
+            <Link to="/">
+              <button
+                type="button"
+                className="btn btn-danger"
+              >
+                Hủy Bỏ
+              </button>
+            </Link>
           </div>
         </form>
       </div>
@@ -108,6 +106,7 @@ TaskForm.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     taskItem: state.itemUpdate,
+    status: state.tasks.toast.status,
   };
 };
 
