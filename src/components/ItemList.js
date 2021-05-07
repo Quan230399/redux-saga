@@ -24,7 +24,7 @@ function ItemList(props) {
   };
 
   const toggleStatus = () => {
-    onToggletatus(task.id);
+    onToggletatus(task);
   };
 
   return (

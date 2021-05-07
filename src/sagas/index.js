@@ -1,19 +1,9 @@
-import { call, fork, put } from "redux-saga/effects";
-import { getListTodo } from "../apis/tasks";
-import * as action from "../actions/actions";
+import { fork} from "redux-saga/effects";
+import {watchFetchListTodoAction} from "./task";
 
 function* rootSaga() {
-  yield fork(watchFetchListTodo);
+  yield fork(watchFetchListTodoAction);
 }
 
-function* watchFetchListTodo() {
-  try {
-    const resp = yield call(getListTodo);
-    const { status, data } = resp;
-    yield put(action.fetchListTodoSuccess(data));
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 export default rootSaga;

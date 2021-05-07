@@ -1,28 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
+import * as action from "../actions/actions";
 import ItemList from "./ItemList";
 import { connect } from "react-redux";
 
 function TaskList(props) {
-  const { tasks } = props;
-
-  // const taskSort = tasks.sort((x, y) => {
-  //   if (keySort === "ẩn") return x.status - y.status;
-  //   if (keySort === "kích hoạt") return y.status - x.status;
-  //   if (keySort === "a-z") return x.name.localeCompare(y.name);
-  //   if (keySort === "z-a") return y.name.localeCompare(x.name);
-  //   return 0;
-  // });
-
-  // const tasksSearch = taskSort.filter((task) => task.name_slug.includes(keySearch));
+  const { tasks, onFetchListTodo } = props;
 
   const elements = tasks.map((task, index) => {
-    return (
-      <ItemList
-        task={task}
-        index={index}
-        key={task.id}
-      ></ItemList>
-    );
+    return <ItemList task={task} index={index} key={task.id}></ItemList>;
   });
 
   return (
@@ -40,11 +25,18 @@ function TaskList(props) {
   );
 }
 
-
 const mapStateToProps = (state) => {
   return {
     tasks: state.tasks.todo,
   };
 };
 
-export default connect(mapStateToProps, null)(TaskList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchListTodo: () => {
+      dispatch(action.fetchListTodo);
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);

@@ -1,15 +1,36 @@
-export const LIST_ALL = "LIST_ALL";
-export const ADD_TASK = "ADD_TASK";
-export const DELETE_TASK = "DELETE_TASK";
-export const UPDATE_TASK = "UPDATE_TASK";
-export const TOGGLE_STATUS_TASK = "TOGGLE_STATUS_TASK";
+export const STATUS_CODE = {
+    SUCCESS: 200,
+    CREATED: 201,
+    UPDATED: 202,
+  };
+
+
 export const CLEAR_FORM = "CLEAR_FORM";
-export const SEARCH = "SEARCH";
-export const SORT = "SORT";
 export const CLEAR_TOAST = "CLEAR_TOAST";
 export const LOGIN = "LOGIN";
 
+export const FETCH_LIST_TASK = "FETCH_LIST_TASK";
+export const FETCH_LIST_TASK_SUCCESS = "FETCH_LIST_TASK_SUCCESS";
+export const FETCH_LIST_TASK_FAIL = "FETCH_LIST_TASK_FAIL";
 
-export const FETCH_LIST_TASK='FETCH_LIST_TASK';
-export const FETCH_LIST_TASK_SUCCESS='FETCH_LIST_TASK_SUCCESS';
-export const FETCH_LIST_TASK_ERROR='FETCH_LIST_TASK_ERROR';
+export const ADD_TASK = "ADD_TASK";
+export const ADD_TASK_SUCCESS = "ADD_TASK_SUCCESS";
+export const ADD_TASK_FAIL = "ADD_TASK_FAIL";
+
+export const UPDATE_TASK = "UPDATE_TASK";
+export const UPDATE_TASK_ITEM = "UPDATE_TASK_ITEM";
+export const UPDATE_TASK_SUCCESS = "UPDATE_TASK_SUCCESS";
+export const UPDATE_TASK_FAIL = "UPDATE_TASK_FAIL";
+
+export const DELETE_TASK = "DELETE_TASK";
+export const DELETE_TASK_SUCCES = "DELETE_TASKDELETE_TASK_SUCCES";
+export const DELETE_TASK_FAIL = "DELETE_TASK_FAIL";
+
+export const SEARCH = "SEARCH";
+export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
+
+export const SORT = "SORT";
+export const SORT_SUCCESS = "SORT_SUCCESS";
+
+export const TOGGLE_STATUS_TASK = "TOGGLE_STATUS_TASK";
+export const TOGGLE_STATUS_TASK_SUCCESS = "TOGGLE_STATUS_TASK_SUCCESS";

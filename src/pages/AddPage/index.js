@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import TaskForm from "../../components/TaskForm";
 
 AddPage.propTypes = {};

@@ -16,18 +16,30 @@ var myReducer = (state = initialState, action) => {
   let tasks = { ...state };
   let newTask;
   switch (action.type) {
-    //saga
-    case type.FETCH_LIST_TASK:
+    //fetch list task
+    case type.FETCH_LIST_TASK: {
+      console.log("oke");
       return {
         ...state,
       };
+    }
 
-    case type.FETCH_LIST_TASK_SUCCESS:
+    case type.FETCH_LIST_TASK_SUCCESS: {
       const data = action.payload;
       return {
         ...state,
         todo: data,
       };
+    }
+
+    case type.FETCH_LIST_TASK_FAIL: {
+      const data = action.payload;
+      toastWarning(data);
+      return {
+        ...state,
+      };
+    }
+
     // add task
     case type.ADD_TASK:
       const tasksListSlugs = tasks.todo.map((task) =>
@@ -92,24 +104,29 @@ var myReducer = (state = initialState, action) => {
       return { ...tasks };
 
     // delete task
-    case type.DELETE_TASK:
-      newTask = tasks.todo.filter((task) => {
-        return task.id !== action.payload;
-      });
-      tasks = { ...tasks, todo: [...newTask] };
-      return { ...tasks };
+    case type.DELETE_TASK: {
+      return { ...state };
+    }
+
+    case type.DELETE_TASK_SUCCES: {
+      toastSuccess(`Đã xóa ${action.payload}`);
+      return { ...state };
+    }
+
+    case type.DELETE_TASK_FAIL: {
+      toastWarning("Xóa không thành công !");
+      return { ...state };
+    }
 
     // toggle status
-    case type.TOGGLE_STATUS_TASK:
-      newTask = tasks.todo.map((task) => {
-        return task.id === action.payload
-          ? { ...task, status: !task.status }
-          : task;
-      });
-      tasks = { ...tasks, todo: [...newTask] };
-      toastSuccess("Đã thay đổi trạng thái");
+    case type.TOGGLE_STATUS_TASK: {
+      return { ...state };
+    }
 
-      return { ...tasks };
+    case type.TOGGLE_STATUS_TASK_SUCCESS:{
+      toastSuccess(`Đã thay đổi trạng thái ${action.payload}`);
+      return {...state}
+    }
 
     case type.CLEAR_TOAST:
       return {

@@ -6,17 +6,20 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 function TaskForm(props) {
-  const { taskItem, onAddTask, status } = props;
+  const { taskItem, onAddTask, status, onUpdate } = props;
   const history = useHistory();
   const [valueForm, setValueForm] = useState({
     id: "",
     name: "",
     status: true,
+    name_slug:''
   });
 
   useEffect(() => {
-   if(status==="succes") history.push("/");
-  },[status]);
+    if (status === "succes") {
+      history.push("/");
+    }
+  }, [status]);
 
   useEffect(() => {
     setValueForm(taskItem);
@@ -26,6 +29,8 @@ function TaskForm(props) {
     let target = event.target;
     let name = target.name;
     let value = target.value;
+
+
     setValueForm({
       ...valueForm,
       [name]: value,
@@ -34,7 +39,12 @@ function TaskForm(props) {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    onAddTask(valueForm);
+    if (!valueForm.id) {
+      onAddTask(valueForm);
+    } else {
+      onUpdate(valueForm);
+    }
+    
     setValueForm({
       id: "",
       name: "",
@@ -81,10 +91,7 @@ function TaskForm(props) {
             </button>
             &nbsp;
             <Link to="/">
-              <button
-                type="button"
-                className="btn btn-danger"
-              >
+              <button type="button" className="btn btn-danger">
                 Hủy Bỏ
               </button>
             </Link>
@@ -114,6 +121,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddTask: (task) => {
       dispatch(action.addTask(task));
+    },
+    onUpdate: (task) => {
+      dispatch(action.updateTaskItem(task));
     },
   };
 };
