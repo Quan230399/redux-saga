@@ -132,11 +132,9 @@ export const updateTaskItem = (task) => {
   };
 };
 
-
-
 export const updateTaskSuccess = (data) => {
   return {
-    type: type.UPDATE_TASK,
+    type: type.UPDATE_TASK_SUCCESS,
     payload: data,
   };
 };

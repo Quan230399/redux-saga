@@ -2,7 +2,6 @@ import {
   call,
   fork,
   put,
-  take,
   takeEvery,
   takeLatest,
 } from "redux-saga/effects";
@@ -14,6 +13,7 @@ import {
 } from "../apis/tasks";
 import * as action from "../actions/actions";
 import * as type from "../constant/actionType";
+import history from "../helpers/history";
 
 export function* watchFetchListTodoAction() {
   yield fork(watchFetchListTodo);
@@ -57,6 +57,10 @@ function* watchToogleStatus({ payload }) {
 
 function* watchUpdateTask({ payload }) {
   const { id } = payload;
-  yield call(updateTaskItem, id, {...payload});
-  yield call(watchFetchListTodo);
+  try {
+    yield call(updateTaskItem, id, { ...payload });
+    yield put(action.updateTaskSuccess(id));
+    yield call(watchFetchListTodo);
+  } catch (error) {
+  }
 }

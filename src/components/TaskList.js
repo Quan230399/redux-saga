@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as action from "../actions/actions";
 import ItemList from "./ItemList";
 import { connect } from "react-redux";
 
 function TaskList(props) {
-  const { tasks, onFetchListTodo } = props;
+  const { tasks } = props;
 
   const elements = tasks.map((task, index) => {
     return <ItemList task={task} index={index} key={task.id}></ItemList>;
