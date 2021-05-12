@@ -2,19 +2,25 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as action from "../actions/actions";
 import PropTypes from "prop-types";
-
+import { Link } from "react-router-dom";
+import slugString from "slug";
+import { useHistory } from "react-router-dom";
 function TaskForm(props) {
-  const { taskItem, onAddTask, onClose } = props;
+  const { taskItem, onAddTask, onUpdate, status } = props;
+  const history = useHistory();
+
   const [valueForm, setValueForm] = useState({
     id: "",
     name: "",
     status: true,
+    name_slug: "",
   });
 
-  const closeForm = () => {
-    if (!onClose) return;
-    onClose();
-  };
+  useEffect(() => {
+    if (status === "success") {
+      history.push("/");
+    }
+  }, [status]);
 
   useEffect(() => {
     setValueForm(taskItem);
@@ -24,32 +30,46 @@ function TaskForm(props) {
     let target = event.target;
     let name = target.name;
     let value = target.value;
+    let name_slug = valueForm.name_slug;
+
+    if (name === "status") {
+      if (value === true || value === "true") {
+        value = true;
+      } else {
+        value = false;
+      }
+    } else {
+      name_slug = slugString(value);
+    }
+
     setValueForm({
       ...valueForm,
       [name]: value,
+      name_slug: name_slug,
     });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    onAddTask(valueForm);
+    if (!valueForm.id) {
+      onAddTask(valueForm);
+    } else {
+      onUpdate(valueForm);
+    }
+
     setValueForm({
       id: "",
       name: "",
       status: true,
+      name_slug: "",
     });
-    closeForm();
   };
 
   return (
     <div className="panel panel-warning">
       <div className="panel-heading">
-        <h3 className="panel-title">
+        <h3 className="panel-title text-center">
           {!valueForm.id ? "Thêm công viêc" : "Chỉnh sửa công việc"}
-          <span
-            className="fa fa-times-circle text-right"
-            onClick={closeForm}
-          ></span>
         </h3>
       </div>
       <div className="panel-body">
@@ -83,13 +103,11 @@ function TaskForm(props) {
               {!valueForm.id ? "Thêm" : "Lưu"}
             </button>
             &nbsp;
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={closeForm}
-            >
-              Hủy Bỏ
-            </button>
+            <Link to="/">
+              <button type="button" className="btn btn-danger">
+                Hủy Bỏ
+              </button>
+            </Link>
           </div>
         </form>
       </div>
@@ -108,6 +126,7 @@ TaskForm.defaultProps = {
 const mapStateToProps = (state) => {
   return {
     taskItem: state.itemUpdate,
+    status: state.tasks.toast.status,
   };
 };
 
@@ -115,6 +134,9 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onAddTask: (task) => {
       dispatch(action.addTask(task));
+    },
+    onUpdate: (task) => {
+      dispatch(action.updateTaskItem(task));
     },
   };
 };

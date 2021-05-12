@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import * as action from "../actions/actions";
 import { connect } from "react-redux";
 import { confirmA } from "../helpers/confirmAlert";
+import { Link } from "react-router-dom";
 function ItemList(props) {
   const {
     task,
@@ -10,22 +11,20 @@ function ItemList(props) {
     onDeleteTask,
     onUpdateTask,
     onToggletatus,
-    onOpen,
+    onClearToast,
   } = props;
 
   const onDelete = () => {
-    confirmA("Xác nhận","Bạn có chắc muốn xóa ?",()=>onDeleteTask(task.id));
-    
+    confirmA("Xác nhận", "Bạn có chắc muốn xóa ?", () => onDeleteTask(task.id));
   };
 
   const onUpdate = () => {
-    if (!onOpen) return;
+    onClearToast();
     onUpdateTask(task);
-    onOpen();
   };
 
   const toggleStatus = () => {
-    onToggletatus(task.id);
+    onToggletatus(task);
   };
 
   return (
@@ -41,13 +40,15 @@ function ItemList(props) {
         </span>
       </td>
       <td className="text-center">
-        <button
-          type="button"
-          className="btn btn-warning mr-5"
-          onClick={onUpdate}
-        >
-          <span className="fa fa-pencil mr-5" /> Sửa
-        </button>
+        <Link to="/add">
+          <button
+            type="button"
+            className="btn btn-warning mr-5"
+            onClick={onUpdate}
+          >
+            <span className="fa fa-pencil mr-5" /> Sửa
+          </button>
+        </Link>
         <button type="button" className="btn btn-danger" onClick={onDelete}>
           <span className="fa fa-trash mr-5" /> Xóa
         </button>
@@ -78,6 +79,10 @@ const mapDispatchToProps = (dispatch, props) => {
 
     onToggletatus: (id) => {
       dispatch(action.toogleStatus(id));
+    },
+
+    onClearToast: () => {
+      dispatch(action.clearToast());
     },
   };
 };

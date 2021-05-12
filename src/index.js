@@ -17,7 +17,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ToastContainer
-        position="top-center"
+        position="top-right"
         autoClose={1500}
         hideProgressBar
         newestOnTop={false}

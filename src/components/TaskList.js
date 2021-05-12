@@ -1,30 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
+import * as action from "../actions/actions";
 import ItemList from "./ItemList";
 import { connect } from "react-redux";
 
 function TaskList(props) {
-  const { tasks, onOpen, keySearch, keySort } = props;
+  const { tasks } = props;
+  console.log(tasks);
 
-  const taskSort = tasks.sort((x, y) => {
-    if (keySort === "ẩn") return x.status - y.status;
-    if (keySort === "kích hoạt") return y.status - x.status;
-    if (keySort === "a-z") return x.name.localeCompare(y.name);
-    if (keySort === "z-a") return y.name.localeCompare(x.name);
-    return 0;
-  });
-
-  const tasksSearch = taskSort.filter((task) => task.name_slug.includes(keySearch));
-
-  const elements = tasksSearch.map((task, index) => {
-    return (
-      <ItemList
-        task={task}
-        index={index}
-        key={task.id}
-        onOpen={onOpen}
-      ></ItemList>
-    );
+  const elements = tasks.map((task, index) => {
+    return <ItemList task={task} index={index} key={task.id}></ItemList>;
   });
 
   return (
@@ -42,20 +26,18 @@ function TaskList(props) {
   );
 }
 
-TaskList.propTypes = {
-  onOpen: PropTypes.func,
-  keySearch: PropTypes.string.isRequired,
-  keySort: PropTypes.string.isRequired,
-};
-
-TaskList.defaultProps = {
-  onOpen: null,
-};
-
 const mapStateToProps = (state) => {
   return {
-    tasks: state.tasks,
+    tasks: state.tasks.todo,
   };
 };
 
-export default connect(mapStateToProps, null)(TaskList);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchListTodo: () => {
+      dispatch(action.fetchListTodo);
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
