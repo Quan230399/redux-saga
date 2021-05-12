@@ -1,13 +1,15 @@
 export const STATUS_CODE = {
-    SUCCESS: 200,
-    CREATED: 201,
-    UPDATED: 202,
-  };
+  SUCCESS: 200,
+  CREATED: 201,
+  UPDATED: 202,
+};
 
+export const LOGIN = "LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
 
 export const CLEAR_FORM = "CLEAR_FORM";
 export const CLEAR_TOAST = "CLEAR_TOAST";
-export const LOGIN = "LOGIN";
 
 export const FETCH_LIST_TASK = "FETCH_LIST_TASK";
 export const FETCH_LIST_TASK_SUCCESS = "FETCH_LIST_TASK_SUCCESS";

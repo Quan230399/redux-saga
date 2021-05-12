@@ -2,6 +2,7 @@ import React from "react";
 // import PropTypes from "prop-types";
 import Control from "../../components/Control";
 import TaskList from "../../components/TaskList";
+import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as action from "../../actions/actions";
@@ -12,10 +13,11 @@ function HomePages(props) {
   const { onClearForm, onClearToast } = props;
   const onAdd = () => {
     onClearToast();
-    onClearForm({ id: "", name: "", status: true });
+    onClearForm({ id: "", name: "", status: true, name_slug:"" });
   };
   return (
     <div>
+    <Header></Header>
       <div className="container">
         <div className="text-center">
           <h1>Quản Lý Công Việc</h1>

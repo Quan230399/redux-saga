@@ -1,19 +1,14 @@
-import {
-  call,
-  fork,
-  put,
-  takeEvery,
-  takeLatest,
-} from "redux-saga/effects";
+import { call, fork, put, takeEvery, takeLatest } from "redux-saga/effects";
 import {
   getListTodo,
   deleteTaskItem,
   toogleStatusTaskItem,
   updateTaskItem,
+  addTaskItem,
+  searchListItem,
 } from "../apis/tasks";
 import * as action from "../actions/actions";
 import * as type from "../constant/actionType";
-import history from "../helpers/history";
 
 export function* watchFetchListTodoAction() {
   yield fork(watchFetchListTodo);
@@ -21,6 +16,8 @@ export function* watchFetchListTodoAction() {
   yield takeLatest(type.DELETE_TASK, watchDeleteTask);
   yield takeEvery(type.TOGGLE_STATUS_TASK, watchToogleStatus);
   yield takeEvery(type.UPDATE_TASK_ITEM, watchUpdateTask);
+  yield takeEvery(type.ADD_TASK, watchAddTask);
+  yield takeEvery(type.SEARCH, watchSearchTask);
 }
 
 function* watchFetchListTodo() {
@@ -62,5 +59,23 @@ function* watchUpdateTask({ payload }) {
     yield put(action.updateTaskSuccess(id));
     yield call(watchFetchListTodo);
   } catch (error) {
+    yield put(action.updateTaskFail(error));
   }
+}
+
+function* watchAddTask({ payload }) {
+  try {
+    yield call(addTaskItem, payload);
+    yield put(action.addTaskSuccess(payload));
+    yield call(watchFetchListTodo);
+  } catch (error) {}
+}
+
+function* watchSearchTask({ payload }) {
+  try {
+    const resp = yield call(searchListItem, payload);
+    console.log(resp);
+    const { data } = resp;
+    yield put(action.searchSuccess(data));
+  } catch (error) {}
 }

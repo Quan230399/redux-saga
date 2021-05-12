@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 function TaskList(props) {
   const { tasks } = props;
+  console.log(tasks);
 
   const elements = tasks.map((task, index) => {
     return <ItemList task={task} index={index} key={task.id}></ItemList>;

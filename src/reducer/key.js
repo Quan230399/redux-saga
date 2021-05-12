@@ -7,10 +7,7 @@ var initialState = {
 
 var myKey = (state = initialState, action) => {
   switch (action.type) {
-    case type.SEARCH:
-      return { ...state, keySearch: action.payload };
-    case type.SORT:
-      return { ...state, keySort: action.payload };
+
 
     default:
       return { ...state };

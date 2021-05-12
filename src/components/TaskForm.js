@@ -5,28 +5,23 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import slugString from "slug";
 import { useHistory } from "react-router-dom";
-
-
-
-const randomString = require("randomstring");
-
 function TaskForm(props) {
   const { taskItem, onAddTask, onUpdate, status } = props;
   const history = useHistory();
- 
+
   const [valueForm, setValueForm] = useState({
     id: "",
     name: "",
     status: true,
-    name_slug:""
+    name_slug: "",
   });
-  
+
   useEffect(() => {
-    if (status === "succes") {
+    if (status === "success") {
       history.push("/");
     }
   }, [status]);
-  
+
   useEffect(() => {
     setValueForm(taskItem);
   }, [taskItem]);
@@ -35,30 +30,22 @@ function TaskForm(props) {
     let target = event.target;
     let name = target.name;
     let value = target.value;
+    let name_slug = valueForm.name_slug;
 
-    if(name === 'status'){
-      if(value===true || value==='true'){
-        value=true;
-      }else{
-        value=false;
+    if (name === "status") {
+      if (value === true || value === "true") {
+        value = true;
+      } else {
+        value = false;
       }
-    }else{
-      setValueForm({
-        ...valueForm,
-        name_slug: slugString(value)
-      });
+    } else {
+      name_slug = slugString(value);
     }
 
-    if(valueForm.id===''){
-      setValueForm({
-        ...valueForm,
-        id: randomString(7),
-      });
-    }
-    
     setValueForm({
       ...valueForm,
       [name]: value,
+      name_slug: name_slug,
     });
   };
 
@@ -69,11 +56,12 @@ function TaskForm(props) {
     } else {
       onUpdate(valueForm);
     }
-    
+
     setValueForm({
       id: "",
       name: "",
       status: true,
+      name_slug: "",
     });
   };
 

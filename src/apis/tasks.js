@@ -22,3 +22,12 @@ export const updateTaskItem = (id, data) => {
 export const addTaskItem = (data) => {
   return axiosService.post(`${API_ENDPOINT}/${url}`, data);
 };
+
+export const searchItem = (keyid) => {
+  return axiosService.get(`${API_ENDPOINT}/${url}?id=${keyid}`);
+};
+
+
+export const searchListItem = (keyname) => {
+  return axiosService.get(`${API_ENDPOINT}/${url}?name_slug_like=${keyname}`);
+};

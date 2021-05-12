@@ -83,7 +83,6 @@ var myReducer = (state = initialState, action) => {
 
     case type.UPDATE_TASK_SUCCESS: {
       toastSuccess("Cập nhập thành công");
-
       return {
         ...state,
         toast: {
@@ -124,6 +123,34 @@ var myReducer = (state = initialState, action) => {
           status: "",
         },
       };
+
+    // search task list
+    case type.SEARCH: {
+      return { ...state };
+    }
+
+    case type.SEARCH_SUCCESS: {
+      return { ...state, todo: action.payload };
+    }
+
+    // sort
+    case type.SORT: {
+      const key = action.payload;
+      let data = [...state.todo];
+
+      const taskSort = data.sort((x, y) => {
+        if (key === "ẩn") return x.status - y.status;
+        if (key === "kích hoạt") return y.status - x.status;
+        if (key === "a-z") return x.name.localeCompare(y.name);
+        if (key === "z-a") return y.name.localeCompare(x.name);
+        return 0;
+      });
+
+      return {
+        ...state,
+        todo: taskSort,
+      };
+    }
 
     default:
       return { ...state };

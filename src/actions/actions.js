@@ -1,4 +1,5 @@
 import * as type from "../constant/actionType";
+const randomString = require("randomstring");
 
 export const clearForm = (task) => {
   return {
@@ -11,6 +12,13 @@ export const search = (key) => {
   return {
     type: type.SEARCH,
     payload: key,
+  };
+};
+
+export const searchSuccess = (data) => {
+  return {
+    type: type.SEARCH_SUCCESS,
+    payload: data,
   };
 };
 
@@ -59,7 +67,10 @@ export const fetchListTodofail = (data) => {
 export const addTask = (task) => {
   return {
     type: type.ADD_TASK,
-    payload: task,
+    payload: {
+      ...task,
+      id:randomString.generate(7)
+    },
   };
 };
 

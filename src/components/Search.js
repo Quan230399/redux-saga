@@ -2,13 +2,14 @@ import React from "react";
 import debounce from "lodash.debounce";
 import { connect } from "react-redux";
 import * as action from "../actions/actions";
+import slugString from "slug";
 
 function Search(props) {
-  const {   onSearchTask } = props;
+  const { onSearchTask } = props;
 
   const depouceSearch = debounce(
     (value) => {
-      onSearchTask(value);
+      onSearchTask(slugString(value));
     },
     700,
     []
